@@ -17,6 +17,11 @@ void PlayScene::Update() {
 
 	for (auto& enemy : enemies) {
 		enemy.Move();
+		enemy.CollitionChecker(player.GetBullets());
+
+		if (!enemy.GetIsActive()) {
+			enemies.erase(enemies.begin());
+		}
 	}
 
 	player.Ready(MatrixType::kSRT, gcamera);

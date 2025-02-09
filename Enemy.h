@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "Bullet.h"
 
 enum class EnemyType {
 	kNormal,
@@ -34,6 +35,8 @@ public:
 	Enemy(EnemyType type = EnemyType::kNormal);
 	~Enemy();
 	void Move();
+
+	void CollitionChecker(std::vector<Bullet> bullet);
 
 	void Draw() override;
 

@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Collition.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -25,6 +26,9 @@ Enemy::Enemy(EnemyType type) {
 		visual_.push_back(visual);
 
 		direction_ = { 1, 0 };
+
+		buffer = sqrtf(32.0f * 32.0f + 32.0f * 32.0f);
+		size_ = { buffer, buffer };
 
 		speed_ = 3.0f;
 
@@ -57,7 +61,17 @@ void Enemy::Move() {
 
 	for (auto& visual : visual_) {
 		visual.SetPos(pos_);
+		visual.SetScale(scale_);
 		visual.Update();
+	}
+}
+
+void Enemy::CollitionChecker(std::vector<Bullet> bullet) {
+	for (auto& b : bullet) {
+		if (Collition::CtC(this, &b)) {
+			isActive_ = false;
+			b.SetIsActive(false);
+		}
 	}
 }
 
